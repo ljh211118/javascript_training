@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <title> 연습2</title>
+
+        <!-- 문서의 모양을 꾸밀 때 : CSS -->
+        <style>
+            .group1 {
+                border: 2px solid blue; /* p 태그에 대해서 테두리선을 2픽셀 두께, 실선, 파란색으로 */
+            }
+
+            span {
+                border : 2px solid green;
+            }
+
+            img {
+                border : 2px solid red;
+    
+            }
+
+            #my1 {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <h1> 연습 두번째</h1> <!-- 타이틀 -->
+        
+        <div>
+            <p class = "group1"> 연습입니다. </p> <p class = "group1"> 연습입니다. 2 </p> <p id = "my1"> 연습입니다. 3 </p> <!-- 글자의 한 단락-->
+        </div>
+
+        <div>
+            <span class = "group1"> 테스트입니다. </span>
+            <span> 테스트입니다. 2 </span>
+            <span> 테스트입니다. 3 </span>
+        </div>
+
+        
+        <div>
+            <img src = "image/dog_stand.png"> <!-- img는 끝 태그 X -->
+            <img src = "image/dog_sit.png">
+            <img src = "image/dog_run.png">
+        </div>
+
+        <div>
+            <input type = "text" value = "홍길동1" id = "input1">
+            <input type = "text" value = "21">
+            <input type = "text" value = "010-1000-0000">
+
+            <button onclick = "show()"> 확인 </button>
+        </div>
+
+        <div id = "output1"></div>
+
+        <script>
+            function show() {
+                //alert('버튼이 눌렸어요.');
+                console.log('버튼이 눌렸어요.');
+
+                const input = document.querySelector('#input1');
+                const output1 = document.querySelector('#output1');
+                output1.innerHTML = `<p>입력한 값 : ${input1.value}</p>`;
+
+            }
+        </script>
+
+    </body>
+</html>

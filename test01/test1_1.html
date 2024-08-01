@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <title>
+            test1
+        </title>
+
+        <style>
+            h1 {
+                color : aqua;
+            }
+
+            .group1 {
+                border: 2px solid red;
+            }
+
+            #my1 {
+                background-color: chocolate;
+                color : white;
+                margin : 2em;
+                padding : 2em;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div>
+            <h1> 테스트1 </h1>
+            
+            <p class = "group1"> 테스트입니다. </p>
+            <p id = "my1"> 테스트입니다2.</p>
+
+            <span class = "group1"> 테스트입니다. </span>
+            <span> 테스트입니다2. </span>
+        </div>
+
+        <div>
+            <input type = "text" value = "홍길동1">
+            <input type = "text" value = "21">
+        </div>
+
+        <div>    
+            <input type = "text" value = "" id = "input1">
+            <input type = "text" value = "" id = "input2">
+
+
+            <button onclick = "show()">확인</button>
+
+            <div id="output1">
+
+            </div>
+        </div>
+
+        <div>
+            <img src = "image/cat_sit.png" id = "output2">
+        </div>
+
+        <script> 
+            /*
+            function show() {
+                consol.log('show 함수 호출됨.');
+            }
+            */
+            const show = () => {
+
+                console.log('show 함수 호출됨.');
+
+                const input1 = document.querySelector('#input1');
+                const input2 = document.querySelector('#input2');
+
+                const aStr = input1.value;
+                const bStr = input2.value;
+
+                const a = Number(aStr);
+                const b = Number(bStr);
+
+
+                if(isNaN(a) || isNaN(b)) {
+                    alert('입력된 값이 숫자가 아닙니다.');
+
+                    return ;
+                }
+
+                const result = a + b;
+                
+                const output1 = document.querySelector('#output1');
+                output1.innerHTML = `<p> 더하기 결과 : ${result}</p>`;
+
+                const output2 = document.querySelector('#output2');
+                output2.src = 'image/cat_stand.png'
+            }
+        </script>
+    </body>
+</html>

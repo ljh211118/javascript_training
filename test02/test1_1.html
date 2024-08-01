@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <title>테스트1</title>
+
+        <style>
+             #container1 {
+                background-color: rgb(11, 20, 89);
+             }
+
+             h1 {
+                color: rgb(255, 169, 199);
+             }
+        </style>
+    </head>
+
+    <body>
+        <div id = "container1">
+            <h1>테스트1</h1>
+        </div>
+
+        <div>
+            <input type = "text" value = "" id = "input1">
+            <input type = "text" value = "" id = "input2">
+
+            <button onclick = "show()">확인</button>
+        </div>
+
+        <div id = "output1";></div>
+
+        <script src = 'test1_1.js'></script>
+
+        <script>
+            function show() {
+                console.log(`show함수 호출됨.`);
+
+                const input1 = Number(document.getElementById('input1').value);
+                const input2 = Number(document.getElementById('input2').value);
+
+                const result = add(input1, input2);
+                print(`더하기 결과 : ${result}`)
+            }
+        </script>
+    </body>
+</html>

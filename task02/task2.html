@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <title>입장료 계산기</title>
+        <script src="moment.min.js"></script>
+
+        <style>
+            .circular_input {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                border: 5px solid #5effbc;
+                text-align: center;
+                font-size: 16px;
+                outline: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>입장료 계산기</h1>
+        </div>
+
+        <div id="timeOutput">
+
+        </div>
+
+        <div>
+            <span>성인수</span>
+            <input type = "text" value = "" id = "inputAdultCount">
+            <span>명</span>
+        </div>
+    
+        <div>
+            <span>어린이수</span>
+            <input type = "text" value = "" id = "inputChildCount">
+            <span>명</span>
+        </div>
+    
+        <div>
+            <span>입장료</span>
+            <input type = "text" value = "" id = "totalFee">
+            <span>원</span>
+        </div>
+    
+        <div>
+            <span>단체할인</span>
+            <input type = "radio" name = "groupDiscount" value = "salePrice" checked>
+            <span>예</span>
+            <input type = "radio" name = "groupDiscount" value = "netPrice">
+            <span>아니오</span>
+        </div>
+    
+        <div>
+            <button onclick="entranceFee()">확인</button>
+        </div>
+    
+        <div>
+            <span>성인 1인당</span>
+            <input type = "text" value = "20000" id = "adultPrice">
+            <span>원</span>
+        </div>
+    
+        <div>
+            <span>어린이 1인당</span>
+            <input type = "text" value = "9900" id = "childPrice">
+            <span>원</span>
+            <p>단체 할인 : 5명 이상 20%</p>
+        </div>
+
+        <div>
+            <h1>야간 할인</h1>
+        </div>
+
+        <div>
+            <span>성인 1인당</span>
+            <input type = "text" value = "12000" id = "nightAdultPrice">
+            <span>원</span>
+        </div>
+
+        <div>
+            <span>어린이 1인당</span>
+            <input type = "text" value = "12000" id = "nightChildPrice">
+            <span>원</span>
+            <p>오후 6시부터 야간 할인이 적용됩니다.</p>
+        </div>
+
+        <div>
+            <h1>이벤트</h1>
+        </div>
+
+        <div>
+            <span>입장인원 : 총</span>
+            <input type = "text" value = "80" id = "luckyBall">
+            <span>명</span>
+            <span> 
+                <button onclick="win()"> 추첨하기 </button> 
+            </span>
+            <p></p>
+        </div>
+
+        <div> 
+            <span>당첨자</span>
+            <input type = "text" value = "" class = "circular_input" id = "ball1">
+            <input type = "text" value = "" class = "circular_input" id = "ball2">
+            <input type = "text" value = "" class = "circular_input" id = "ball3">
+            <input type = "text" value = "" class = "circular_input" id = "ball4">
+            <input type = "text" value = "" class = "circular_input" id = "ball5">
+            <input type = "text" value = "" class = "circular_input" id = "ball6">
+            <p>입장하시는 분들은 번호표를 받으세요.</p>
+            <p>여섯 분을 추첨하여 스타벅스 쿠폰을 드립니다.</p>
+        </div>
+    
+        <div>
+            <img src="image/smile.jpg" id="output1">
+        </div>
+    
+        <script>
+
+            function time() {
+
+                setInterval(() => {
+                    const curTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                    document.getElementById('timeOutput').innerHTML = `<p>${curTime}</p>`
+                }, 1000)
+                
+            }
+
+            function formatPrice(value) {
+                return Number(value).toLocaleString();
+            }
+    
+            function initializePrices() {
+                const adultPriceField = document.getElementById('adultPrice');
+                const childPriceField = document.getElementById('childPrice');
+                const nightAdultPriceField = document.getElementById('nightAdultPrice');
+                const nightChildPriceField = document.getElementById('nightChildPrice');
+
+                adultPriceField.value = formatPrice(adultPriceField.value);
+                childPriceField.value = formatPrice(childPriceField.value);
+                nightAdultPriceField.value = formatPrice(nightAdultPriceField.value);
+                nightChildPriceField.value = formatPrice(nightChildPriceField.value);
+                // document.getElementById('adultPrice').value = formatPrice(document.getElementById('adultPrice').value);
+            }
+    
+            function entranceFee() {
+                const inputAdultCount = document.getElementById('inputAdultCount');
+                const inputChildCount = document.getElementById('inputChildCount');
+                let adultPrice = Number(document.getElementById('adultPrice').value.replace(/,/g, ''));
+                let childPrice = Number(document.getElementById('childPrice').value.replace(/,/g, ''));
+                const radios = document.getElementsByName('groupDiscount');
+                const checkedRadio = Array.from(radios).find(radio => radio.checked);
+                const currentHour = moment().hour();
+
+                const adultCount = Number(inputAdultCount.value);
+                const childCount = Number(inputChildCount.value);
+
+                const output1 = document.getElementById('output1'); // 이미지 요소를 여기서 선언
+
+                if (currentHour >= 18) { // 야간 할인을 적용해야 하는 시간인 경우
+                    adultPrice = Number(document.getElementById('nightAdultPrice').value.replace(/,/g, ''));
+                    childPrice = Number(document.getElementById('nightChildPrice').value.replace(/,/g, ''));
+                }
+
+                if (isNaN(adultCount) || isNaN(childCount)) {
+                    output1.src = 'image/sad.jpg';
+                    alert('숫자를 입력해주세요.');
+                    return;
+                } else {
+                    output1.src = 'image/smile.jpg';
+                }
+
+                let totalFee = (adultCount * adultPrice) + (childCount * childPrice);
+                const totalCount = adultCount + childCount;
+
+                if (checkedRadio.value === 'salePrice' && totalCount >= 5) {
+                    totalFee *= 0.8; // 20% 할인 적용
+                }
+
+                totalFee = Math.round(totalFee);
+
+                const formattedTotalFee = totalFee.toLocaleString();
+
+                document.getElementById('totalFee').value = formattedTotalFee; // 수정된 부분: totalFee를 제대로 표시
+
+                const luckyBall = document.getElementById('luckyBall');
+                const currentTotalPeople = Number(luckyBall.value);
+                luckyBall.value = currentTotalPeople + totalCount;
+            }
+
+            function win() {
+
+                const totalPeople = Number(document.getElementById('luckyBall').value);
+                if (isNaN(totalPeople) || totalPeople <= 0) {
+                    alert('숫자를 입력하세요.');
+                    return;
+                }
+
+                const getRandomNumber = (max) => Math.floor(Math.random() * max) + 1;
+
+                const balls = [
+                    document.getElementById('ball1'),
+                    document.getElementById('ball2'),
+                    document.getElementById('ball3'),
+                    document.getElementById('ball4'),
+                    document.getElementById('ball5'),
+                    document.getElementById('ball6')
+                ];
+
+                const selectedNumbers = new Set();
+                while (selectedNumbers.size < balls.length) {
+                    selectedNumbers.add(getRandomNumber(totalPeople));
+                }
+
+                Array.from(selectedNumbers).forEach((number, index) => {
+                    balls[index].value = number;
+                });
+            }
+
+            window.onload = function() {
+                initializePrices();
+                time();
+            };
+        </script>
+    </body>
+
+</html>
